@@ -1,0 +1,7 @@
+pathlib
+yaml
+json
+requests
+pygithub
+argparse
+termcolor
