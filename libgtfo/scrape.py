@@ -15,7 +15,8 @@ class Scrape:
     def __init__(self, base_url = "https://gtfobins.github.io", git_url = "https://github.com/GTFOBins/GTFOBins.github.io", filename = "data/data.json") -> None:
         self.base_url = base_url
         self.git_url = git_url 
-        self.data_file = filename
+        base_dir = str(pathlib.Path(__file__))
+        self.data_file = base_dir[:base_dir.find("GTHAXS")+len("GTHAXS/")] + filename
         self.git = Github()
         self.repo = self.git.get_repo("GTFOBins/GTFOBins.github.io")
         self.vulns = {

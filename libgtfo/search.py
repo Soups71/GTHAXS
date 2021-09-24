@@ -4,11 +4,13 @@ Edited last by: Soups
 Edited last: 19SEPT21
 """
 import json
+from pathlib import Path
 from libgtfo.config import *
 
 class Search():
     def __init__(self, path = "data/data.json") -> None:
-        self.base_path = path
+        base_dir = str(Path(__file__))
+        self.base_path = base_dir[:base_dir.find("GTHAXS")+len("GTHAXS/")] + path
         with open(self.base_path, 'r') as reader:
             self.data = json.load(reader)
 
