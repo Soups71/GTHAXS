@@ -19,6 +19,7 @@ class Scrape:
         self.data_file = base_dir[:base_dir.find("GTHAXS")+len("GTHAXS/")] + filename
         self.git = Github()
         self.repo = self.git.get_repo("GTFOBins/GTFOBins.github.io")
+        self.branch = repo.get_branch("master")
         self.vulns = {
             "base_url": self.base_url,
             "last_updated": "",
@@ -39,21 +40,20 @@ class Scrape:
         if data_location.exists():
             with open(self.data_file, 'r') as data_reader:
                 data = json.load(data_reader)
-                if data["last_updated"] == self.lastUpdated(self.base_url):
+                if data["last_updated"] == self.lastUpdated():
                     return 0
         self.scrape()
         self.save()
         return 0
 
 
-    def lastUpdated(self, url):
-        header_request = requests.head(url)
-        url_time = header_request.headers['last-modified']
-        return url_time
+    def lastUpdated(self):
+        last_main_update = branch.commit.commit.committer.date.strftime("%Y/%m/%d, %H:%M:%S")
+        return last_main_update
 
 
     def scrape(self):
-        self.vulns["last_updated"] = self.lastUpdated(self.base_url)
+        self.vulns["last_updated"] = self.lastUpdated()
         vuln_files = self.repo.get_contents("_gtfobins")
         vuln_data_formatted = {}
         for each in vuln_files:
