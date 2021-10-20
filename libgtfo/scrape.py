@@ -19,7 +19,7 @@ class Scrape:
         self.data_file = base_dir[:base_dir.find("GTHAXS")+len("GTHAXS/")] + filename
         self.git = Github()
         self.repo = self.git.get_repo("GTFOBins/GTFOBins.github.io")
-        self.branch = repo.get_branch("master")
+        self.branch = self.repo.get_branch("master")
         self.vulns = {
             "base_url": self.base_url,
             "last_updated": "",
@@ -48,7 +48,7 @@ class Scrape:
 
 
     def lastUpdated(self):
-        last_main_update = branch.commit.commit.committer.date.strftime("%Y/%m/%d, %H:%M:%S")
+        last_main_update = self.branch.commit.commit.committer.date.strftime("%Y/%m/%d, %H:%M:%S")
         return last_main_update
 
 
